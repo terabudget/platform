@@ -1,0 +1,14 @@
+services:
+  neo4j:
+    image: neo4j:latest
+    volumes:
+        - ${NEO4J_DIR}/logs:/logs
+        - ${NEO4J_DIR}/config:/config
+        - ${NEO4J_DIR}/data:/data
+        - ${NEO4J_DIR}/plugin:/plugins
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    restart: always
+    environment:
+      - NEO4J_AUTH=${NEO4J_AUTH}
