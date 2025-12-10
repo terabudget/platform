@@ -1,14 +1,23 @@
 services:
-  neo4j:
-    image: neo4j:latest
-    volumes:
-        - ${NEO4J_DIR}/logs:/logs
-        - ${NEO4J_DIR}/config:/config
-        - ${NEO4J_DIR}/data:/data
-        - ${NEO4J_DIR}/plugin:/plugins
-    ports:
-      - "7474:7474"
-      - "7687:7687"
+  db:
+    image: postgres
     restart: always
+    # set shared memory limit when using docker compose
+    shm_size: 128mb
+    volumes:
+      - ${DATABASE_DATA_DIR}:/var/lib/postgresql/18/docker
+    # or set shared memory limit when deploy via swarm stack
+    #volumes:
+    #  - type: tmpfs
+    #    target: /dev/shm
+    #    tmpfs:
+    #      size: 134217728 # 128*2^20 bytes = 128Mb
     environment:
-      - NEO4J_AUTH=${NEO4J_AUTH}
+      POSTGRES_DB: budget
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8081:8080

@@ -1,5 +1,12 @@
 # Docker compose setup
 
+```bash
+docker compose up
 ```
-http://localhost:7474
+
+## Adminer
+Adminer is now availble here:
+
+```
+http://localhost:8081
 ```
